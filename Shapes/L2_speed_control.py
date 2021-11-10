@@ -2,6 +2,8 @@
 # to send to motors, and has a function to execute PID control.
 
 # Import external libraries
+import time
+
 import numpy as np                                  # for handling arrays
 
 # Import local files
@@ -96,7 +98,7 @@ while 1:
     print("\nLeft: ", encValues[0], "\t", "Right: ", encValues[1])
     driveClosedLoop(myPhiDots, kin.getPdCurrent(), 0)
 
-    print("Testing Round 3")
+    print("\n\nTesting Round 3")
     myVelocities = np.array([0.4, 0])  # input your first pair
     myPhiDots = inv.convert(myVelocities)
     encValues = enc.readShaftPositions()
@@ -110,7 +112,7 @@ while 1:
     print("\nLeft: ", encValues[0], "\t", "Right: ", encValues[1])
     driveClosedLoop(myPhiDots, kin.getPdCurrent(), 0)
 
-    print("Testing Round 5")
+    print("\n\nTesting Round 5")
     myVelocities = np.array([0.4, 0])  # input your first pair
     myPhiDots = inv.convert(myVelocities)
     encValues = enc.readShaftPositions()
@@ -124,9 +126,18 @@ while 1:
     print("\nLeft: ", encValues[0], "\t", "Right: ", encValues[1])
     driveClosedLoop(myPhiDots, kin.getPdCurrent(), 0)
 
-    print("Testing Round 7")
+    print("\n\nTesting Round 7")
     myVelocities = np.array([0.4, 0])  # input your first pair
     myPhiDots = inv.convert(myVelocities)
     encValues = enc.readShaftPositions()
     print("\nLeft: ", encValues[0], "\t", "Right: ", encValues[1])
     driveClosedLoop(myPhiDots, kin.getPdCurrent(), 0)
+
+    print("Square done")
+    time.sleep(10)
+    print("Restarting Program in 3")
+    time.sleep(1)
+    print("2")
+    time.sleep(1)
+    print("1")
+    time.sleep(1)
