@@ -49,17 +49,6 @@ def forwardFunction(r0):  # when the target is straight on, approach
     return xdt
 
 
-def turnAndGo(xVal):  # turn towards object and approach
-    xVal = 0.8 * xVal  # scale down for slower turns
-    centerBand = 0.15  # in this band, don't turn
-    if abs(x_range) > centerBand:  # outside the band, make a turn
-        chassisTargets = inv.map_speeds(np.array([0, xVal]))  # generate xd, td
-    else:
-        xdt = forwardFunction(radius)  # determine forward speed
-        chassisTargets = inv.map_speeds(np.array([xdt, 0]))  # set td zero
-    return chassisTargets
-
-
 # THIS SECTION ONLY RUNS IF THE PROGRAM IS CALLED DIRECTLY
 if __name__ == "__main__":
     while True:
@@ -70,11 +59,6 @@ if __name__ == "__main__":
             sc.driveOpenLoop(stop)  # command motors in open-loop fashion
 
         else:
-            x_range = round(track.getAngle(target[0]), 2)  # find out the angle of the target
-            radius = round(target[2], 1)  # find out the radius of the target
-            print("Target position: ", x_range, "\t radius", radius)
-            chassisTargets = turnAndGo(x_range)  # take the x target location & generate turning
-            pdTargets = inv.convert(chassisTargets)  # phi dot targets (rad/s) [for open loop?]
             # sc.driveOpenLoop(pdTargets)                         # command motors in open-loop fashion
-            PID.loop_drive(pdTargets)  # PID Drive
+            PID.loop_drive()  # PID Drive
             time.sleep(0.01)  # short delay
