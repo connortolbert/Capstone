@@ -33,11 +33,16 @@ def openLoop(pdl, pdr):
 
 def driveOpenLoop(pdTargets):  # Pass Phi dot targets to this function
     duties = openLoop(pdTargets[0], pdTargets[1])  # produce duty cycles from the phi dots
+    print(duties)
     m.sendLeft(duties[0])  # send command to motors
     m.sendRight(duties[1])  # send command to motors
 
 
 def scalingFunction(x):  # a fcn to compress the PWM region where motors don't turn
+    if x < 100:
+        x = x / 100
+    else:
+        x = x / 1000
     if -0.222 < x and x < 0.222:
         y = (x * 3)
     elif x > 0.222:
@@ -47,10 +52,23 @@ def scalingFunction(x):  # a fcn to compress the PWM region where motors don't t
     return y
 
 
+def con_scalingFunction(x):  # a fcn to compress the PWM region where motors don't turn
+
+    if -22.2 < x and x < 22.2:
+        y = (x * 3)
+    elif x > 22.2:
+        y = ((x * 0.778) + 0.222)
+    else:
+        y = ((x * 0.778) - 0.222)
+    return y
+
+
 def scaleMotorEffort(u):  # send the control effort signals to the scaling function
     u_out = np.zeros(2)
+    print("Motor values before scaling:", u)
     u_out[0] = scalingFunction(u[0])
     u_out[1] = scalingFunction(u[1])
+    print("Motor values after scaling:", u_out)
     return (u_out)
 
 
@@ -82,15 +100,25 @@ def driveClosedLoop(pdt, pdc, de_dt):  # this function runs motors for closed lo
     # CONDITION THE SIGNAL BEFORE SENDING TO MOTORS
     u = np.round((u_proportional + u_integral + u_derivative), 2)  # must round to ensure driver handling
     u = scaleMotorEffort(u)  # MOVED to line 85                              # perform scaling - described above
-
+    # u = u
+    print("Before constraint", u)
     u[0] = sorted([-1, u[0], 1])[1]  # place bounds on the motor commands
     u[1] = sorted([-1, u[1], 1])[1]  # within [-1, 1]
 
+    # w = u[0]
+    # q = u[1]
+
+    # if u[0] > .8:
+    #     u[0] = w - .3
+
+    # if u[1] > .8:
+    #     u[1] = q - .3
+
+    # print("After constraint", u)
+
     # SEND SIGNAL TO MOTORS
+    # print("send motor signals")
     m.sendLeft(round(u[0], 2))  # must round to ensure driver handling!
     m.sendRight(round(u[1], 2))  # must round to ensure driver handling!f
-    # print(u[0], u[1])
+    print("wheel speeds Left, Right", u[0], u[1])
     return
-
-
-if __name__ == "__main__":
