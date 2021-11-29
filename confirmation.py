@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QDesktopWidget
 import variables
 import time
 
-
+#Creation and Declairation of Window
 class Ui_confirmation(object):
 
     def ConfirmationShow(self):
@@ -28,6 +28,7 @@ class Ui_confirmation(object):
         frame.moveCenter(center)
         confirmation.move(frame.topLeft())
 
+        #Button Creation, Placement, Naming, Styling
         self.confirm = QtWidgets.QPushButton(confirmation)
         self.confirm.setStyleSheet("background-color: black; color: green")
         self.confirm.setGeometry(QtCore.QRect(50, 30, 200, 50))
@@ -47,7 +48,7 @@ class Ui_confirmation(object):
 
 
 
-
+    #Command Functions: what happens when a button is pressed
     def Confirm(self):
         print(variables.command)
         # ConfirmationHide()
@@ -55,6 +56,7 @@ class Ui_confirmation(object):
         variables.s.send(str(variables.command).encode())
         print("Sent")
         time.sleep(3)
+        variables.command = 0
 
     def Cancel(self):
         variables.command = 0
@@ -66,7 +68,7 @@ class Ui_confirmation(object):
 
     def retranslateUi(self, confirmation):
         _translate = QtCore.QCoreApplication.translate
-        confirmation.setWindowTitle(_translate("confirmation", "Form"))
+        confirmation.setWindowTitle(_translate("confirmation", "Confirmation"))
         self.confirm.setText(_translate("confirmation", "Confirm"))
         self.cancel.setText(_translate("confirmation", "Cancel"))
 

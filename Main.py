@@ -1,3 +1,4 @@
+import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDesktopWidget
 from shapes import Ui_Form
@@ -9,7 +10,6 @@ import socket
 
 
 class Ui_MainWindow(object):
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("GEDI")
         MainWindow.resize(640, 480)
@@ -27,14 +27,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setStyleSheet("background-color: white")
         self.centralwidget.setObjectName("centralwidget")
 
-        #adding logo attempt
-        # self.logo = QtWidgets.QLabel(self.centralwidget)
-        # self.logo.setGeometry(QtCore.QRect(100, 100, 100, 100))
-        # self.logo.setText("")
-        # self.logo.setPixmap(QtGui.QPixmap("GEDI.jpeg"))
-        # self.logo.setScaledContents(True)
-        # self.logo.setObjectName("GEDI")
-
+        #Creating and Configuring Buttons
         self.Scout = QtWidgets.QPushButton(MainWindow)
         self.Scout.setStyleSheet("background-color:black; color: red; font-size: 32px")
         self.Scout.setGeometry(QtCore.QRect(40, 250, 250, 100))
@@ -68,6 +61,7 @@ class Ui_MainWindow(object):
         self.Scout.clicked.connect(self.scout)
         self.Tile.clicked.connect(self.tile)
 
+    #Command Functions: what happens when a button is pressed, Connecting separate windows
     def MainShow(self):
         self.MainWindow = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow()
@@ -96,7 +90,7 @@ class Ui_MainWindow(object):
         Ui_confirmation.ConfirmationShow(self)
 
 
-
+    #Setting Button text
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -104,7 +98,6 @@ class Ui_MainWindow(object):
         self.Tile.setText(_translate("MainWindow", "Tile"))
         self.Carry.setText(_translate("MainWindow", "Carry"))
         self.Shapes.setText(_translate("MainWindow", "Shapes"))
-        # self.label.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/user/Noah Gomez/PycharmProjects/GUI/GEDI.jpeg\"/>TextLabel</p></body></html>"))
 
 
 
@@ -114,17 +107,16 @@ class Ui_MainWindow(object):
 if __name__ == "__main__":
 
     while True:
-        import sys
 
-        #connor, connect to server
-        variables.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #IPv4, TCP
-        variables.s.connect(("192.168.1.6", 65531))  #host name/IP address, port
-
-        #receive message from server
-        msg = variables.s.recv(50)
-        print(msg.decode())
-        time.sleep(3)
-
+        # #connor, connect to server
+        # variables.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #IPv4, TCP
+        # variables.s.connect("192.168.1.23", 65530)  #host name/IP address, port
+        #
+        # #receive message from server
+        # msg = variables.s.recv(50)
+        # print(msg.decode())
+        # time.sleep(3)
+        #
         # exit = 0
         app = QtWidgets.QApplication(sys.argv)
         MainWindow = QtWidgets.QMainWindow()
@@ -132,5 +124,5 @@ if __name__ == "__main__":
         ui.setupUi(MainWindow)
         MainWindow.show()
         sys.exit(app.exec_())
-        #sleep(1000000)
+        sleep(1000000)
 

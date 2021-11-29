@@ -49,6 +49,7 @@ class Ui_Form(object):
         self.pushButton_4.clicked.connect(self.Square)
         # self.pushButton_5.clicked.connect(self.Back)
 
+    #Command Functions: what happens when a button is pressed
     def Hexagon(self):
         variables.command = 1
         print(variables.command)
@@ -89,6 +90,7 @@ class Ui_Form(object):
     #     variables.command = 0
     #     print(variables.command)
 
+    #Setting Button text
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Shapes", "Shapes"))

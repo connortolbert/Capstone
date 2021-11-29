@@ -36,7 +36,7 @@ class Ui_Carry(object):
         self.pushButton_2.clicked.connect(self.Blue)
         self.pushButton_3.clicked.connect(self.Green)
 
-
+    #Command Functions: what happens when a button is pressed
     def Red(self):
         variables.command = 5
         self.confirmation = QtWidgets.QWidget()
@@ -58,9 +58,10 @@ class Ui_Carry(object):
         self.ui.setupUi(self.confirmation)
         self.confirmation.show()
 
+    #Setting Button text
     def retranslateUi(self, Carry):
         _translate = QtCore.QCoreApplication.translate
-        Carry.setWindowTitle(_translate("Carry", "Form"))
+        Carry.setWindowTitle(_translate("Carry", "Carry"))
         self.pushButton.setText(_translate("Carry", "Red"))
         self.pushButton_2.setText(_translate("Carry", "Green"))
         self.pushButton_3.setText(_translate("Carry", "Blue"))
